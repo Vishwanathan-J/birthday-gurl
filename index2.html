@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ff4f87" />
+  <title>Happy Birthday S SIVARANJINI!</title>
+
+  <style>
+    :root {
+      --pink: #ff4f87;
+      --purple: #7c4dff;
+      --ink: #3c2454;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-family: "Trebuchet MS", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, #ffe177 0 4%, transparent 4.4%),
+        radial-gradient(circle at 88% 82%, #b7f4df 0 5%, transparent 5.4%),
+        linear-gradient(135deg, #fff1f6, #eee5ff 55%, #e5fbff);
+    }
+
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .card {
+      width: min(90%, 650px);
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.4rem, 6vw, 4.5rem);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 22px 55px rgba(92, 54, 141, 0.22);
+      backdrop-filter: blur(10px);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .card::before,
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .card::before {
+      background: #ffd45d;
+      top: -26px;
+      left: -25px;
+    }
+
+    .card::after {
+      background: #bd9cff;
+      right: -28px;
+      bottom: -27px;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.8rem;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: var(--pink);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: clamp(2.45rem, 10vw, 5.5rem);
+      line-height: 0.95;
+      color: var(--purple);
+    }
+
+    .birthday-name {
+      margin: 0.55rem 0 0;
+      font-weight: 800;
+      font-size: clamp(1.15rem, 4.2vw, 1.7rem);
+      letter-spacing: 0.08em;
+      color: var(--pink);
+    }
+
+    .cake {
+      font-size: clamp(4rem, 15vw, 6.7rem);
+      line-height: 1.1;
+      display: block;
+      margin: 1.3rem 0 0.8rem;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    .message {
+      margin: 0 auto 1.8rem;
+      max-width: 440px;
+      font-size: clamp(1rem, 3.8vw, 1.25rem);
+      line-height: 1.65;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 0.95rem 1.55rem;
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 10px 20px rgba(124, 77, 255, 0.28);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .signature {
+      margin: 1.6rem 0 0;
+      color: #7a678e;
+      font-size: 0.9rem;
+    }
+
+    .page {
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .page.is-hidden {
+      opacity: 0;
+      transform: scale(0.96);
+      pointer-events: none;
+      position: absolute;
+    }
+
+    .love-page,
+    .forever-page {
+      width: min(94%, 900px);
+      min-height: min(86vh, 700px);
+      display: none;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+      border-radius: 34px;
+      box-shadow: 0 24px 65px rgba(158, 66, 123, 0.25);
+    }
+
+    .love-page {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 238, 244, 0.92),
+        rgba(243, 229, 255, 0.92),
+        rgba(255, 244, 207, 0.92)
+      );
+    }
+
+    .forever-page {
+      background: radial-gradient(
+        circle at center,
+        #fff8db 0%,
+        #ffe8f0 42%,
+        #e9dcff 100%
+      );
+    }
+
+    .love-page.is-visible,
+    .forever-page.is-visible {
+      display: grid;
+      animation: appear 0.7s ease both;
+    }
+
+    .love-page::before,
+    .love-page::after {
+      content: "♥";
+      position: absolute;
+      color: #ff80aa;
+      opacity: 0.18;
+      font-size: clamp(13rem, 36vw, 28rem);
+    }
+
+    .love-page::before {
+      left: -4rem;
+      top: -7rem;
+      transform: rotate(-20deg);
+    }
+
+    .love-page::after {
+      right: -4rem;
+      bottom: -9rem;
+      transform: rotate(24deg);
+    }
+
+    .question-card {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      padding: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .heart {
+      display: block;
+      font-size: clamp(3.2rem, 10vw, 5.5rem);
+      animation: heartbeat 1.25s infinite;
+    }
+
+    .question-card h2 {
+      margin: 0.9rem 0;
+      font-family: Georgia, serif;
+      color: #d53f76;
+      font-size: clamp(2rem, 7vw, 4.35rem);
+      line-height: 1.08;
+    }
+
+    .question-card p {
+      margin: 0;
+      color: #754163;
+    }
+
+    .date-button {
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, #ec4f83, #ff9d5c);
+    }
+
+    .quote {
+      position: absolute;
+      z-index: 1;
+      max-width: 150px;
+      margin: 0;
+      color: #8e4b72;
+      font-family: Georgia, serif;
+      font-size: clamp(0.72rem, 2.2vw, 1rem);
+      font-style: italic;
+      line-height: 1.35;
+    }
+
+    .q1 { top: 9%; left: 7%; }
+    .q2 { top: 13%; right: 6%; }
+    .q3 { left: 5%; bottom: 15%; }
+    .q4 { right: 5%; bottom: 13%; }
+    .q5 { top: 43%; left: 3%; }
+    .q6 { top: 45%; right: 3%; }
+
+    .forever-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .bouquet {
+      display: block;
+      font-size: clamp(6rem, 20vw, 11rem);
+      animation: bouquet-float 2.8s ease-in-out infinite;
+    }
+
+    .forever-content h2 {
+      margin: 0.4rem 0 1.4rem;
+      font-family: Georgia, serif;
+      color: #d13e70;
+      font-size: clamp(2.3rem, 9vw, 5rem);
+      letter-spacing: 0.06em;
+    }
+
+    .photo-frame {
+      width: min(56vw, 320px);
+      aspect-ratio: 3 / 4;
+      margin: auto;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      border: 10px solid rgba(255, 255, 255, 0.72);
+      border-radius: 24px;
+      background: #f8dce5;
+      box-shadow: 0 15px 35px rgba(137, 67, 107, 0.22);
+    }
+
+    .couple-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0.5;
+      filter: saturate(0.9) sepia(0.08);
+    }
+
+    .side-heart {
+      position: absolute;
+      z-index: 2;
+      font-size: clamp(1.5rem, 5vw, 3.5rem);
+      animation: heart-drift 2.4s ease-in-out infinite alternate;
+    }
+
+    .s1 { left: 8%; top: 21%; }
+    .s2 { right: 8%; top: 29%; animation-delay: 0.4s; }
+    .s3 { left: 10%; bottom: 16%; animation-delay: 0.7s; }
+    .s4 { right: 10%; bottom: 15%; animation-delay: 1s; }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes heartbeat {
+      50% { transform: scale(1.14); }
+    }
+
+    @keyframes bouquet-float {
+      50% { transform: translateY(-11px) rotate(2deg); }
+    }
+
+    @keyframes heart-drift {
+      to { transform: translateY(-14px) rotate(12deg); }
+    }
+
+    @keyframes bounce {
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    @media (max-width: 620px) {
+      .love-page,
+      .forever-page {
+        min-height: 88vh;
+        padding: 1rem;
+        border-radius: 25px;
+      }
+
+      .question-card {
+        padding: 1.8rem 1.2rem;
+      }
+
+      .quote {
+        max-width: 100px;
+        font-size: 0.68rem;
+      }
+
+      .q1 { top: 5%; left: 4%; }
+      .q2 { top: 7%; right: 3%; }
+      .q3 { left: 3%; bottom: 8%; }
+      .q4 { right: 2%; bottom: 8%; }
+      .q5 { top: 29%; left: 2%; }
+      .q6 { top: 30%; right: 2%; }
+
+      .s1 { left: 3%; top: 14%; }
+      .s2 { right: 3%; top: 20%; }
+      .s3 { left: 4%; bottom: 11%; }
+      .s4 { right: 4%; bottom: 11%; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="confetti"></canvas>
+
+  <main class="card page" id="birthdayPage">
+    <p class="eyebrow">A DAY TO CELEBRATE</p>
+    <h1>Happy Birthday!</h1>
+    <p class="birthday-name">S SIVARANJINI</p>
+    <span class="cake">🎂</span>
+
+    <p class="message">
+      May your year be filled with bright surprises, happy memories,
+      and every little thing that makes you smile.
+    </p>
+
+    <button id="celebrate">Celebrate! 🎉</button>
+    <p class="signature">With lots of love and good wishes ✨</p>
+  </main>
+
+  <section class="love-page" id="lovePage">
+    <p class="quote q1">"Every love story is beautiful, but ours could be my favourite."</p>
+    <p class="quote q2">"You make ordinary moments feel magical."</p>
+    <p class="quote q3">"I like you more with every passing day."</p>
+    <p class="quote q4">"In a world full of people, my eyes look for you."</p>
+    <p class="quote q5">"You are my happy place."</p>
+    <p class="quote q6">"A little more you, a lot more smiles."</p>
+
+    <div class="question-card">
+      <span class="heart">💗</span>
+      <h2>Will you date me,<br>my dear S SIVARANJINI?</h2>
+      <p>My heart has a small question, wrapped in a lot of affection. ✨</p>
+      <button class="date-button" id="letsDate">Lets we date 💞</button>
+    </div>
+  </section>
+
+  <section class="forever-page" id="foreverPage">
+    <span class="side-heart s1">💗</span>
+    <span class="side-heart s2">💕</span>
+    <span class="side-heart s3">💖</span>
+    <span class="side-heart s4">💘</span>
+
+    <div class="forever-content">
+      <span class="bouquet">💐</span>
+      <h2>I LOVE YOU SIVA</h2>
+
+      <div class="photo-frame">
+        <img class="couple-photo" src="vishwa.1.jpeg" alt="A loving hand-holding moment" />
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    const colors = ["#ff4f87", "#7c4dff", "#ffd45d", "#27c9a5", "#54b7ff"];
+    let pieces = [];
+
+    function resize() {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    }
+
+    addEventListener("resize", resize);
+    resize();
+
+    function burst(count = 160) {
+      for (let i = 0; i < count; i++) {
+        pieces.push({
+          x: innerWidth / 2 + (Math.random() - 0.5) * 80,
+          y: innerHeight / 2,
+          w: 6 + Math.random() * 7,
+          h: 8 + Math.random() * 9,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 11,
+          vy: -5 - Math.random() * 12,
+          gravity: 0.2,
+          spin: (Math.random() - 0.5) * 0.22,
+          angle: Math.random() * Math.PI,
+          life: 140
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      pieces = pieces.filter(piece => piece.life-- > 0);
+
+      for (const piece of pieces) {
+        piece.x += piece.vx;
+        piece.y += piece.vy;
+        piece.vy += piece.gravity;
+        piece.angle += piece.spin;
+
+        ctx.save();
+        ctx.translate(piece.x, piece.y);
+        ctx.rotate(piece.angle);
+        ctx.globalAlpha = Math.min(1, piece.life / 22);
+        ctx.fillStyle = piece.color;
+
+        if (piece.heart) {
+          ctx.font = `${piece.w * 2.2}px Arial`;
+          ctx.fillText("♥", -piece.w, piece.h / 2);
+        } else {
+          ctx.fillRect(-piece.w / 2, -piece.h / 2, piece.w, piece.h);
+        }
+
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    document.getElementById("celebrate").addEventListener("click", () => {
+      burst(210);
+      document.getElementById("birthdayPage").classList.add("is-hidden");
+      document.getElementById("lovePage").classList.add("is-visible");
+    });
+
+    document.getElementById("letsDate").addEventListener("click", () => {
+      for (let i = 0; i < 180; i++) {
+        pieces.push({
+          x: innerWidth / 2,
+          y: innerHeight / 2,
+          w: 9 + Math.random() * 12,
+          h: 10,
+          color: ["#ff4f87", "#d13e70", "#ff8bb2"][Math.floor(Math.random() * 3)],
+          vx: (Math.random() - 0.5) * 13,
+          vy: -4 - Math.random() * 14,
+          gravity: 0.18,
+          spin: (Math.random() - 0.5) * 0.12,
+          angle: 0,
+          life: 140,
+          heart: true
+        });
+      }
+
+      document.getElementById("lovePage").classList.remove("is-visible");
+      document.getElementById("foreverPage").classList.add("is-visible");
+    });
+
+    burst();
+    animate();
+  </script>
+</body>
+</html>
